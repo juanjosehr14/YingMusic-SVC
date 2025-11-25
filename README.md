@@ -71,21 +71,21 @@ sudo apt install -y ffmpeg
 
 ## Quick Start 🚀
 
-[//]: # (### 1. **accompany separation**)
+### 1. **accompany separation**
 
-[//]: # ()
-[//]: # (```bash)
-
-[//]: # (accelerate launch train_cpt.py --config configs/cpt.yaml)
-
-[//]: # (```)
-
-### 1. **SVC Inference**
 
 ```bash
-python svc_infer.py   --wave input.wav   --spk target.wav   --out result.wav
+
+cd accom_separation
+bash infer.sh
+
 ```
 
+### 2. **SVC Inference**
+
+```bash
+bash my_infer.sh
+```
 
 ---
 
@@ -93,26 +93,29 @@ python svc_infer.py   --wave input.wav   --spk target.wav   --out result.wav
 
 We provide a **graded difficulty benchmark**, derived from 100+ multi-track studio songs:
 
+[📥 Download](https://huggingface.co/datasets/GiantAILab/YingMusic-SVC_Difficulty-Graded_Benchmark)
+
 | Level | Description |
 |-------|-------------|
 | **GT Leading** | Clean studio lead vocals |
 | **Mix Vocal** | Lead + harmony contamination |
-| **Ours Leading** | Extracted via MB-RoFormer separator |
+| **Ours Leading** | Extracted via our Band RoFormer separator |
+
 
 ---
 
 ## Pretrained Models 🧪
 
-| Model              | Description                    | Status |
-|--------------------|--------------------------------|--------|
-| **YingMusic‑Full** | RL‑enhanced final model        | ✅ |
-| **our-MBR**        | Our accompany separation model | 🚧|
+| Model              | Description                     | Link |
+|--------------------|--------------------------------|------|
+| **YingMusic-Full** | RL-enhanced final model         | [![Hugging Face](https://img.shields.io/badge/🤗%20HuggingFace-YingMusic--Full-yellow)](https://huggingface.co/GiantAILab/YingMusic-SVC/blob/main/YingMusic-SVC-full.pt) |
+| **our BR separator** | Our accompany separation model | [![Hugging Face](https://img.shields.io/badge/🤗%20HuggingFace-BR--separator-yellow)](https://huggingface.co/GiantAILab/YingMusic-SVC/blob/main/bs_roformer.ckpt) |
 
 
 ---
 
 ## Development Roadmap & TODO 🗺️
-- [ ] our stem-separator inference CLI & model ckpt
+- [x] our stem-separator inference CLI & model ckpt
 - [ ] develop gradio app for YingMusic-SVC
 - [ ] benchmark one-click eval script
 
