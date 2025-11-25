@@ -1,13 +1,13 @@
 #!/bin/bash
 
-source='/user-fs/chenzihao/chengongyu/svc/seed-vc/test/good_vocals/Legend of a Hungry Wolf__vocals.mp3'
-accompany='/user-fs/chenzihao/chengongyu/svc/seed-vc/test/good_vocals/Legend of a Hungry Wolf__instrumental.mp3'
-target="/user-fs/chenzihao/chengongyu/svc/seed-vc/test/timbres/孙燕姿.wav"
+source='path/to/source_vocal.wav'
+accompany='path/to/accompany.wav'
+target="path/to/target_timbre.wav"
 diffusion_step=100
 fp16="True"
 config='./configs/YingMusic-SVC.yml'
-checkpoint='/user-fs/chenzihao/chengongyu/svc/seed-vc/runs/zxyRL/11.18/all8_737.pth'
-expname="DEB"
+checkpoint='path/to/ckpt.pth'
+expname="your_exp_name"
 cuda="0"
 
 
