@@ -5,7 +5,7 @@
 <div align="center">
 
 [![Paper](https://img.shields.io/badge/Paper-YingMusic--SVC-blue)](tech_report/YingMusic-SVC_tech_report.pdf)
-[![Hugging Face](https://img.shields.io/badge/🤗%20HuggingFace-YingMusic--SVC-yellow)]()
+[![Hugging Face](https://img.shields.io/badge/🤗%20HuggingFace-YingMusic--SVC-yellow)](https://huggingface.co/GiantAILab/YingMusic-SVC)
 
 [//]: # ([![Hugging Face]&#40;https://img.shields.io/badge/Demo-YingMusic--SVC-green&#41;]&#40;&#41;)
 
@@ -105,17 +105,18 @@ We provide a **graded difficulty benchmark**, derived from 100+ multi-track stud
 
 | Model              | Description                    | Status |
 |--------------------|--------------------------------|--------|
-| **our-MBR**        | Our accompany separation model | ✅ |
 | **YingMusic‑Full** | RL‑enhanced final model        | ✅ |
+| **our-MBR**        | Our accompany separation model | 🚧|
+
 
 ---
 
 ## Development Roadmap & TODO 🗺️
 - [ ] our stem-separator inference CLI & model ckpt
 - [ ] develop gradio app for YingMusic-SVC
+- [ ] benchmark one-click eval script
 
 
----
 
 [//]: # (## Acknowledgements 🙏  )
 
