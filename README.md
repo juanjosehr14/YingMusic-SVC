@@ -146,25 +146,21 @@ This project is built upon:
 
 [//]: # ()
 [//]: # ()
-[//]: # (## Citation 🧾)
+## Citation 🧾
 
-[//]: # ()
-[//]: # (If you use YingMusic‑SVC for research, please cite:)
 
-[//]: # ()
-[//]: # (```)
+If you use YingMusic‑SVC for research, please cite:
 
-[//]: # (@article{yingmusic_svc_2025,)
+```
 
-[//]: # (  title={YingMusic-SVC: Real-World Robust Zero-Shot Singing Voice Conversion with Flow-GRPO and Singing-Specific Inductive Biases},)
+@article{chen2025yingmusicsvc,
+  title={YingMusic-SVC: Real-World Robust Zero-Shot Singing Voice Conversion with Flow-GRPO and Singing-Specific Inductive Biases},
+  author={Chen, Gongyu and Zhang, Xiaoyu and Weng, Zhenqiang and Zheng, Junjie and Shen, Da and Ding, Chaofan and Zhang, Wei-Qiang and Chen, Zihao},
+  journal={arXiv preprint arXiv:2512.04793},
+  year={2025}
+}
 
-[//]: # (  author={Chen, Gongyu and Zhang, Xiaoyu and Weng, Zhenqiang and Zheng, Junjie and Shen, Da and Ding, Chaofan and Zhang, Wei-Qiang and Chen, Zihao},)
-
-[//]: # (  year={2025})
-
-[//]: # (})
-
-[//]: # (```)
+```
 
 ---
 
