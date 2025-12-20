@@ -1,22 +1,1024 @@
-# Compiled class file
-*.class
 
-# Log file
-*.log
+package proyectofinal;
 
-# BlueJ files
-*.ctxt
+import java.util.Scanner;
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+public class ProyectoFinal {
 
-# Package Files #
-*.jar
-*.war
-*.ear
-*.zip
-*.tar.gz
-*.rar
+    public static void MenuPrincipal(){
+        Scanner teclado = new Scanner(System.in);
+        int opcion;
+        String[] vecCiudades = Ciudades();
+        int mat[][] = Distancias();
+        String vecTransportadoras [] = Transportadoras();
+        double Tarifa [] = new double[3];
+        
+        
+       do{
+            System.out.println("MENU PRINCIPAL");
+            System.out.println("1. Ver Ciudades");
+            System.out.println("2. Transportadoras");
+            System.out.println("3. Calcular valor del envio");
+            System.out.println("4. Costo de transporta a todas las ciudades del país");
+            System.out.println("5. Ver distancia entre ciudades");
+            System.out.println("6. Ver ciudades más cercanas y más lejanas");
+            System.out.println("7. Salir");
+            System.out.println("");
+            System.out.print("Digite una opcion: "); opcion = teclado.nextInt();
+            System.out.println("");
+            if (opcion == 1){               
+                mostrarVector(vecCiudades);
+            }
+            if (opcion == 2){
+                MenuOpcion2(vecTransportadoras, Tarifa);
+            }
+            if (opcion == 3){
+                mostrarVector(vecCiudades);
+                mostrarVectorTarifas(Tarifa, vecTransportadoras);
+                int idx = PedirTransportadora();
+                double tar = Tarifa[idx - 1];
+                MostrarCosto(CostoEnvio(PedirCiudadOrigen(), PedirCiudadDestino(), mat, tar));
+            }
+            if (opcion == 4){
+                mostrarVector(vecCiudades);
+                mostrarVectorTarifas(Tarifa, vecTransportadoras);
+                int idx = PedirTransportadora();
+                double tar = Tarifa[idx - 1];
+                MostrarCostoTodasCiudades(PedirCiudadOrigen(), mat, tar);
+            }
+            if (opcion == 5){
+                mostrarVector(vecCiudades);
+                DistanciaDosCiudades(PedirCiudadOrigen(), PedirCiudadDestino(), mat);
+            }
+            if (opcion == 6){
+                DistanciaMenor(mat);
+                DistanciaMayor(mat);
+            }
+        } while (opcion != 7);   
+    }
+    
+    public static void MenuOpcion2(String[] transportadoras, double[] tarifas){
+        Scanner teclado = new Scanner(System.in);
+        int opcion;
+       do{
+            System.out.println("MENU TRANSPORTADORAS");
+            System.out.println("1. Ver Transportadora");
+            System.out.println("2. Registrar tarifas");
+            System.out.println("3. Ver Tarifas de transportadoras");
+            System.out.println("4. Regresar menu anterior");
+            System.out.println("");
+            System.out.print("Digite una opcion: "); opcion = teclado.nextInt();
+            System.out.println("");
+            if (opcion == 1){
+                mostrarVector(transportadoras);
+            }
+            if (opcion == 2){
+                RegistrarTarifas(tarifas, transportadoras);
+            }
+            if (opcion == 3){
+                mostrarVectorTarifas(tarifas, transportadoras);
+            }
+        } while (opcion != 4);
+    }
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+    public static String [] Ciudades(){
+        String Ciudades [] = new String[27];
+        Ciudades[0] = "1. Armenia";
+        Ciudades[1] = "2. Barranquilla";
+        Ciudades[2] = "3. Bogota";
+        Ciudades[3] = "4. Bucaramanga";
+        Ciudades[4] = "5. Buenaventura";
+        Ciudades[5] = "6. Cali";
+        Ciudades[6] = "7. Cartagena";
+        Ciudades[7] = "8. Cucuta";
+        Ciudades[8] = "9. Florencia";
+        Ciudades[9] = "10. Ibague";
+        Ciudades[10] = "11. Manizales";
+        Ciudades[11] = "12. Medellin";
+        Ciudades[12] = "13. Monteria";
+        Ciudades[13] = "14. Neiva";
+        Ciudades[14] = "15. Pasto";
+        Ciudades[15] = "16. Pereira";
+        Ciudades[16] = "17. Popayan";
+        Ciudades[17] = "18. Quibdo";
+        Ciudades[18] = "19. Rioacha";
+        Ciudades[19] = "20. Sincelejo";
+        Ciudades[20] = "21. Santa Marta";
+        Ciudades[21] = "22. Tunja";
+        Ciudades[22] = "23. Valledupar";
+        Ciudades[23] = "24. Villavicencio";
+        Ciudades[24] = "25. Arauca";
+        Ciudades[25] = "26. Mocoa";
+        Ciudades[26] = "27. Yopal";
+        return Ciudades;
+    }
+    
+    public static int[][] Distancias (){
+        int MatrizDistancias[][] = new int [27][27];
+        MatrizDistancias[0][0] = 0;
+        MatrizDistancias[0][1] = 1098;
+        MatrizDistancias[0][2] = 286; 
+        MatrizDistancias[0][3] = 725;
+        MatrizDistancias[0][4] = 235;
+        MatrizDistancias[0][5] = 194;
+        MatrizDistancias[0][6] = 974;
+        MatrizDistancias[0][7] = 935;
+        MatrizDistancias[0][8] = 533;
+        MatrizDistancias[0][9] = 81;
+        MatrizDistancias[0][10] = 95;
+        MatrizDistancias[0][11] = 348;
+        MatrizDistancias[0][12] = 739;
+        MatrizDistancias[0][13] = 288;
+        MatrizDistancias[0][14] = 594;
+        MatrizDistancias[0][15] = 44;
+        MatrizDistancias[0][16] = 343;
+        MatrizDistancias[0][17] = 596;
+        MatrizDistancias[0][18] = 1289;
+        MatrizDistancias[0][19] = 789;
+        MatrizDistancias[0][20] = 1191;
+        MatrizDistancias[0][21] = 433;
+        MatrizDistancias[0][22] = 1154;
+        MatrizDistancias[0][23] = 599;
+        MatrizDistancias[0][24] = 907;
+        MatrizDistancias[0][25] = 636;
+        MatrizDistancias[0][26] = 422;
+        //**************************************
+        MatrizDistancias[1][0] = 1098;
+        MatrizDistancias[1][1] = 0;
+        MatrizDistancias[1][2] = 1302; 
+        MatrizDistancias[1][3] = 739;
+        MatrizDistancias[1][4] = 1116;
+        MatrizDistancias[1][5] = 1212;
+        MatrizDistancias[1][6] = 124;
+        MatrizDistancias[1][7] = 926;
+        MatrizDistancias[1][8] = 1849;
+        MatrizDistancias[1][9] = 1179;
+        MatrizDistancias[1][10] = 1003;
+        MatrizDistancias[1][11] = 750;
+        MatrizDistancias[1][12] = 424;
+        MatrizDistancias[1][13] = 1386;
+        MatrizDistancias[1][14] = 1612;
+        MatrizDistancias[1][15] = 1054;
+        MatrizDistancias[1][16] = 1361;
+        MatrizDistancias[1][17] = 998;
+        MatrizDistancias[1][18] = 284;
+        MatrizDistancias[1][19] = 309;
+        MatrizDistancias[1][20] = 93;
+        MatrizDistancias[1][21] = 777;
+        MatrizDistancias[1][22] = 364;
+        MatrizDistancias[1][23] = 1418;
+        MatrizDistancias[1][24] = 1003;
+        MatrizDistancias[1][25] = 1524;
+        MatrizDistancias[1][26] = 1053;
+        //**************************************
+        MatrizDistancias[2][0] = 286;
+        MatrizDistancias[2][1] = 1302;
+        MatrizDistancias[2][2] = 0; 
+        MatrizDistancias[2][3] = 439;
+        MatrizDistancias[2][4] = 519;
+        MatrizDistancias[2][5] = 484;
+        MatrizDistancias[2][6] = 1178;
+        MatrizDistancias[2][7] = 649;
+        MatrizDistancias[2][8] = 547;
+        MatrizDistancias[2][9] = 205;
+        MatrizDistancias[2][10] = 299;
+        MatrizDistancias[2][11] = 552;
+        MatrizDistancias[2][12] = 943;
+        MatrizDistancias[2][13] = 302;
+        MatrizDistancias[2][14] = 884;
+        MatrizDistancias[2][15] = 330;
+        MatrizDistancias[2][16] = 633;
+        MatrizDistancias[2][17] = 800;
+        MatrizDistancias[2][18] = 1147;
+        MatrizDistancias[2][19] = 993;
+        MatrizDistancias[2][20] = 1139;
+        MatrizDistancias[2][21] = 147;
+        MatrizDistancias[2][22] = 686;
+        MatrizDistancias[2][23] = 116;
+        MatrizDistancias[2][24] = 632;
+        MatrizDistancias[2][25] = 618;
+        MatrizDistancias[2][26] = 342;
+        //**************************************
+        MatrizDistancias[3][0] = 725;
+        MatrizDistancias[3][1] = 739;
+        MatrizDistancias[3][2] = 439; 
+        MatrizDistancias[3][3] = 0;
+        MatrizDistancias[3][4] = 937;
+        MatrizDistancias[3][5] = 923;
+        MatrizDistancias[3][6] = 917;
+        MatrizDistancias[3][7] = 210;
+        MatrizDistancias[3][8] = 986;
+        MatrizDistancias[3][9] = 644;
+        MatrizDistancias[3][10] = 738;
+        MatrizDistancias[3][11] = 1543;
+        MatrizDistancias[3][12] = 1217;
+        MatrizDistancias[3][13] = 742;
+        MatrizDistancias[3][14] = 1323;
+        MatrizDistancias[3][15] = 769;
+        MatrizDistancias[3][16] = 1072;
+        MatrizDistancias[3][17] = 1791;
+        MatrizDistancias[3][18] = 708;
+        MatrizDistancias[3][19] = 1102;
+        MatrizDistancias[3][20] = 700;
+        MatrizDistancias[3][21] = 292;
+        MatrizDistancias[3][22] = 429;
+        MatrizDistancias[3][23] = 555;
+        MatrizDistancias[3][24] = 417;
+        MatrizDistancias[3][25] = 1043;
+        MatrizDistancias[3][26] = 479;
+        //**************************************
+        MatrizDistancias[4][0] = 235;
+        MatrizDistancias[4][1] = 1116;
+        MatrizDistancias[4][2] = 519;
+        MatrizDistancias[4][3] = 937;
+        MatrizDistancias[4][4] = 0;
+        MatrizDistancias[4][5] = 129;
+        MatrizDistancias[4][6] = 1154;
+        MatrizDistancias[4][7] = 1138;
+        MatrizDistancias[4][8] = 564;
+        MatrizDistancias[4][9] = 319;
+        MatrizDistancias[4][10] = 380;
+        MatrizDistancias[4][11] = 499;
+        MatrizDistancias[4][12] = 899;
+        MatrizDistancias[4][13] = 531;
+        MatrizDistancias[4][14] = 521;
+        MatrizDistancias[4][15] = 268;
+        MatrizDistancias[4][16] = 265;
+        MatrizDistancias[4][17] = 606;
+        MatrizDistancias[4][18] = 1459;
+        MatrizDistancias[4][19] = 966;
+        MatrizDistancias[4][20] = 1266;
+        MatrizDistancias[4][21] = 660;
+        MatrizDistancias[4][22] = 1048;
+        MatrizDistancias[4][23] = 632;
+        MatrizDistancias[4][24] = 1135;
+        MatrizDistancias[4][25] = 632;
+        MatrizDistancias[4][26] = 846;
+        //**************************************
+        MatrizDistancias[5][0] = 194;
+        MatrizDistancias[5][1] = 1212;
+        MatrizDistancias[5][2] = 484; 
+        MatrizDistancias[5][3] = 923;
+        MatrizDistancias[5][4] = 129;
+        MatrizDistancias[5][5] = 0;
+        MatrizDistancias[5][6] = 1088;
+        MatrizDistancias[5][7] = 1133;
+        MatrizDistancias[5][8] = 521;
+        MatrizDistancias[5][9] = 279;
+        MatrizDistancias[5][10] = 275;
+        MatrizDistancias[5][11] = 462;
+        MatrizDistancias[5][12] = 933;
+        MatrizDistancias[5][13] = 486;
+        MatrizDistancias[5][14] = 400;
+        MatrizDistancias[5][15] = 224;
+        MatrizDistancias[5][16] = 149;
+        MatrizDistancias[5][17] = 710;
+        MatrizDistancias[5][18] = 1403;
+        MatrizDistancias[5][19] = 893;
+        MatrizDistancias[5][20] = 1305;
+        MatrizDistancias[5][21] = 631;
+        MatrizDistancias[5][22] = 1352;
+        MatrizDistancias[5][23] = 600;
+        MatrizDistancias[5][24] = 1092;
+        MatrizDistancias[5][25] = 487;
+        MatrizDistancias[5][26] = 802;
+       //**************************************
+        MatrizDistancias[6][0] = 974;
+        MatrizDistancias[6][1] = 124;
+        MatrizDistancias[6][2] = 1178; 
+        MatrizDistancias[6][3] = 917;
+        MatrizDistancias[6][4] = 1154;
+        MatrizDistancias[6][5] = 1088;
+        MatrizDistancias[6][6] = 0;
+        MatrizDistancias[6][7] = 1050;
+        MatrizDistancias[6][8] = 1507;
+        MatrizDistancias[6][9] = 1055;
+        MatrizDistancias[6][10] = 879;
+        MatrizDistancias[6][11] = 626;
+        MatrizDistancias[6][12] = 300;
+        MatrizDistancias[6][13] = 1262;
+        MatrizDistancias[6][14] = 1488;
+        MatrizDistancias[6][15] = 930;
+        MatrizDistancias[6][16] = 1237;
+        MatrizDistancias[6][17] = 874;
+        MatrizDistancias[6][18] = 408;
+        MatrizDistancias[6][19] = 185;
+        MatrizDistancias[6][20] = 217;
+        MatrizDistancias[6][21] = 1554;
+        MatrizDistancias[6][22] = 488;
+        MatrizDistancias[6][23] = 1294;
+        MatrizDistancias[6][24] = 1082;
+        MatrizDistancias[6][25] = 1595;
+        MatrizDistancias[6][26] = 1128;
+        //**************************************
+        MatrizDistancias[7][0] = 935;
+        MatrizDistancias[7][1] = 926;
+        MatrizDistancias[7][2] = 649; 
+        MatrizDistancias[7][3] = 210;
+        MatrizDistancias[7][4] = 1138;
+        MatrizDistancias[7][5] = 1133;
+        MatrizDistancias[7][6] = 1050;
+        MatrizDistancias[7][7] = 0;
+        MatrizDistancias[7][8] = 1179;
+        MatrizDistancias[7][9] = 854;
+        MatrizDistancias[7][10] = 984;
+        MatrizDistancias[7][11] = 1201;
+        MatrizDistancias[7][12] = 1350;
+        MatrizDistancias[7][13] = 951;
+        MatrizDistancias[7][14] = 1533;
+        MatrizDistancias[7][15] = 979;
+        MatrizDistancias[7][16] = 1282;
+        MatrizDistancias[7][17] = 1449;
+        MatrizDistancias[7][18] = 1024;
+        MatrizDistancias[7][19] = 1235;
+        MatrizDistancias[7][20] = 833;
+        MatrizDistancias[7][21] = 502;
+        MatrizDistancias[7][22] = 562;
+        MatrizDistancias[7][23] = 765;
+        MatrizDistancias[7][24] = 346;
+        MatrizDistancias[7][25] = 1170;
+        MatrizDistancias[7][26] = 483;
+        //**************************************
+        MatrizDistancias[8][0] = 533;
+        MatrizDistancias[8][1] = 1849;
+        MatrizDistancias[8][2] = 547; 
+        MatrizDistancias[8][3] = 986;
+        MatrizDistancias[8][4] = 564;
+        MatrizDistancias[8][5] = 521;
+        MatrizDistancias[8][6] = 1507;
+        MatrizDistancias[8][7] = 1179;
+        MatrizDistancias[8][8] = 0;
+        MatrizDistancias[8][9] = 452;
+        MatrizDistancias[8][10] = 628;
+        MatrizDistancias[8][11] = 881;
+        MatrizDistancias[8][12] = 1272;
+        MatrizDistancias[8][13] = 245;
+        MatrizDistancias[8][14] = 623;
+        MatrizDistancias[8][15] = 577;
+        MatrizDistancias[8][16] = 372;
+        MatrizDistancias[8][17] = 1129;
+        MatrizDistancias[8][18] = 1694;
+        MatrizDistancias[8][19] = 1322;
+        MatrizDistancias[8][20] = 1724;
+        MatrizDistancias[8][21] = 694;
+        MatrizDistancias[8][22] = 1415;
+        MatrizDistancias[8][23] = 663;
+        MatrizDistancias[8][24] = 800;
+        MatrizDistancias[8][25] = 136;
+        MatrizDistancias[8][26] = 534;
+        //**************************************
+        MatrizDistancias[9][0] = 81;
+        MatrizDistancias[9][1] = 1179;
+        MatrizDistancias[9][2] = 205; 
+        MatrizDistancias[9][3] = 644;
+        MatrizDistancias[9][4] = 319;
+        MatrizDistancias[9][5] = 279;
+        MatrizDistancias[9][6] = 1055;
+        MatrizDistancias[9][7] = 854;
+        MatrizDistancias[9][8] = 452;
+        MatrizDistancias[9][9] = 0;
+        MatrizDistancias[9][10] = 176;
+        MatrizDistancias[9][11] = 429;
+        MatrizDistancias[9][12] = 820;
+        MatrizDistancias[9][13] = 207;
+        MatrizDistancias[9][14] = 679;
+        MatrizDistancias[9][15] = 125;
+        MatrizDistancias[9][16] = 428;
+        MatrizDistancias[9][17] = 677;
+        MatrizDistancias[9][18] = 1370;
+        MatrizDistancias[9][19] = 870;
+        MatrizDistancias[9][20] = 1272;
+        MatrizDistancias[9][21] = 352;
+        MatrizDistancias[9][22] = 1073;
+        MatrizDistancias[9][23] = 321;
+        MatrizDistancias[9][24] = 824;
+        MatrizDistancias[9][25] = 552;
+        MatrizDistancias[9][26] = 534;
+        //**************************************
+        MatrizDistancias[10][0] = 95;
+        MatrizDistancias[10][1] = 1003;
+        MatrizDistancias[10][2] = 299; 
+        MatrizDistancias[10][3] = 738;
+        MatrizDistancias[10][4] = 380;
+        MatrizDistancias[10][5] = 275;
+        MatrizDistancias[10][6] = 879;
+        MatrizDistancias[10][7] = 984;
+        MatrizDistancias[10][8] = 628;
+        MatrizDistancias[10][9] = 176;
+        MatrizDistancias[10][10] = 0;
+        MatrizDistancias[10][11] = 253;
+        MatrizDistancias[10][12] = 644;
+        MatrizDistancias[10][13] = 683;
+        MatrizDistancias[10][14] = 675;
+        MatrizDistancias[10][15] = 51;
+        MatrizDistancias[10][16] = 429;
+        MatrizDistancias[10][17] = 501;
+        MatrizDistancias[10][18] = 1192;
+        MatrizDistancias[10][19] = 694;
+        MatrizDistancias[10][20] = 1096;
+        MatrizDistancias[10][21] = 446;
+        MatrizDistancias[10][22] = 1167;
+        MatrizDistancias[10][23] = 415;
+        MatrizDistancias[10][24] = 899;
+        MatrizDistancias[10][25] = 722;
+        MatrizDistancias[10][26] = 609;
+        //*************************************
+        MatrizDistancias[11][0] = 348;
+        MatrizDistancias[11][1] = 750;
+        MatrizDistancias[11][2] = 552; 
+        MatrizDistancias[11][3] = 1543;
+        MatrizDistancias[11][4] = 499;
+        MatrizDistancias[11][5] = 462;
+        MatrizDistancias[11][6] = 626;
+        MatrizDistancias[11][7] = 1201;
+        MatrizDistancias[11][8] = 881;
+        MatrizDistancias[11][9] = 729;
+        MatrizDistancias[11][10] = 253;
+        MatrizDistancias[11][11] = 0;
+        MatrizDistancias[11][12] = 391;
+        MatrizDistancias[11][13] = 636;
+        MatrizDistancias[11][14] = 942;
+        MatrizDistancias[11][15] = 304;
+        MatrizDistancias[11][16] = 611;
+        MatrizDistancias[11][17] = 248;
+        MatrizDistancias[11][18] = 941;
+        MatrizDistancias[11][19] = 441;
+        MatrizDistancias[11][20] = 843;
+        MatrizDistancias[11][21] = 699;
+        MatrizDistancias[11][22] = 1114;
+        MatrizDistancias[11][23] = 668;
+        MatrizDistancias[11][24] = 818;
+        MatrizDistancias[11][25] = 884;
+        MatrizDistancias[11][26] = 629;
+        //**************************************
+        MatrizDistancias[12][0] = 739;
+        MatrizDistancias[12][1] = 424;
+        MatrizDistancias[12][2] = 943; 
+        MatrizDistancias[12][3] = 1217;
+        MatrizDistancias[12][4] = 899;
+        MatrizDistancias[12][5] = 933;
+        MatrizDistancias[12][6] = 300;
+        MatrizDistancias[12][7] = 1350;
+        MatrizDistancias[12][8] = 1272;
+        MatrizDistancias[12][9] = 820;
+        MatrizDistancias[12][10] = 644;
+        MatrizDistancias[12][11] = 391;
+        MatrizDistancias[12][12] = 0;
+        MatrizDistancias[12][13] = 1027;
+        MatrizDistancias[12][14] = 1253;
+        MatrizDistancias[12][15] = 695;
+        MatrizDistancias[12][16] = 1002;
+        MatrizDistancias[12][17] = 639;
+        MatrizDistancias[12][18] = 708;
+        MatrizDistancias[12][19] = 115;
+        MatrizDistancias[12][20] = 517;
+        MatrizDistancias[12][21] = 1090;
+        MatrizDistancias[12][22] = 788;
+        MatrizDistancias[12][23] = 1059;
+        MatrizDistancias[12][24] = 1141;
+        MatrizDistancias[12][25] = 1319;
+        MatrizDistancias[12][26] = 940;
+        //*************************************
+        MatrizDistancias[13][0] = 288;
+        MatrizDistancias[13][1] = 1396;
+        MatrizDistancias[13][2] = 302; 
+        MatrizDistancias[13][3] = 742;
+        MatrizDistancias[13][4] = 531;
+        MatrizDistancias[13][5] = 486;
+        MatrizDistancias[13][6] = 1262;
+        MatrizDistancias[13][7] = 951;
+        MatrizDistancias[13][8] = 245;
+        MatrizDistancias[13][9] = 207;
+        MatrizDistancias[13][10] = 383;
+        MatrizDistancias[13][11] = 636;
+        MatrizDistancias[13][12] = 1027;
+        MatrizDistancias[13][13] = 0;
+        MatrizDistancias[13][14] = 466;
+        MatrizDistancias[13][15] = 332;
+        MatrizDistancias[13][16] = 215;
+        MatrizDistancias[13][17] = 884;
+        MatrizDistancias[13][18] = 1577;
+        MatrizDistancias[13][19] = 1077;
+        MatrizDistancias[13][20] = 1479;
+        MatrizDistancias[13][21] = 449;
+        MatrizDistancias[13][22] = 1170;
+        MatrizDistancias[13][23] = 418;
+        MatrizDistancias[13][24] = 916;
+        MatrizDistancias[13][25] = 327;
+        MatrizDistancias[13][26] = 627;
+        //*************************************
+        MatrizDistancias[14][0] = 594;
+        MatrizDistancias[14][1] = 1612;
+        MatrizDistancias[14][2] = 884; 
+        MatrizDistancias[14][3] = 1323;
+        MatrizDistancias[14][4] = 521;
+        MatrizDistancias[14][5] = 400;
+        MatrizDistancias[14][6] = 1488;
+        MatrizDistancias[14][7] = 1533;
+        MatrizDistancias[14][8] = 623;
+        MatrizDistancias[14][9] = 679;
+        MatrizDistancias[14][10] = 675;
+        MatrizDistancias[14][11] = 942;
+        MatrizDistancias[14][12] = 1253;
+        MatrizDistancias[14][13] = 466;
+        MatrizDistancias[14][14] = 0;
+        MatrizDistancias[14][15] = 624;
+        MatrizDistancias[14][16] = 251;
+        MatrizDistancias[14][17] = 1110;
+        MatrizDistancias[14][18] = 1803;
+        MatrizDistancias[14][19] = 1303;
+        MatrizDistancias[14][20] = 1705;
+        MatrizDistancias[14][21] = 1031;
+        MatrizDistancias[14][22] = 1752;
+        MatrizDistancias[14][23] = 1000;
+        MatrizDistancias[14][24] = 1347;
+        MatrizDistancias[14][25] = 103;
+        MatrizDistancias[14][26] = 1057;
+        //*************************************
+        MatrizDistancias[15][0] = 44;
+        MatrizDistancias[15][1] = 1054;
+        MatrizDistancias[15][2] = 330; 
+        MatrizDistancias[15][3] = 769;
+        MatrizDistancias[15][4] = 268;
+        MatrizDistancias[15][5] = 224;
+        MatrizDistancias[15][6] = 930;
+        MatrizDistancias[15][7] = 979;
+        MatrizDistancias[15][8] = 577;
+        MatrizDistancias[15][9] = 125;
+        MatrizDistancias[15][10] = 51;
+        MatrizDistancias[15][11] = 304;
+        MatrizDistancias[15][12] = 695;
+        MatrizDistancias[15][13] = 332;
+        MatrizDistancias[15][14] = 624;
+        MatrizDistancias[15][15] = 0;
+        MatrizDistancias[15][16] = 373;
+        MatrizDistancias[15][17] = 552;
+        MatrizDistancias[15][18] = 1245;
+        MatrizDistancias[15][19] = 745;
+        MatrizDistancias[15][20] = 1147;
+        MatrizDistancias[15][21] = 447;
+        MatrizDistancias[15][22] = 1198;
+        MatrizDistancias[15][23] = 446;
+        MatrizDistancias[15][24] = 943;
+        MatrizDistancias[15][25] = 671;
+        MatrizDistancias[15][26] = 653;
+        //*************************************
+        MatrizDistancias[16][0] = 343;
+        MatrizDistancias[16][1] = 1361;
+        MatrizDistancias[16][2] = 633; 
+        MatrizDistancias[16][3] = 1072;
+        MatrizDistancias[16][4] = 265;
+        MatrizDistancias[16][5] = 149;
+        MatrizDistancias[16][6] = 1237;
+        MatrizDistancias[16][7] = 1282;
+        MatrizDistancias[16][8] = 372;
+        MatrizDistancias[16][9] = 428;
+        MatrizDistancias[16][10] = 424;
+        MatrizDistancias[16][11] = 611;
+        MatrizDistancias[16][12] = 1002;
+        MatrizDistancias[16][13] = 215;
+        MatrizDistancias[16][14] = 251;
+        MatrizDistancias[16][15] = 373;
+        MatrizDistancias[16][16] = 0;
+        MatrizDistancias[16][17] = 859;
+        MatrizDistancias[16][18] = 1552;
+        MatrizDistancias[16][19] = 1052;
+        MatrizDistancias[16][20] = 1454;
+        MatrizDistancias[16][21] = 780;
+        MatrizDistancias[16][22] = 1501;
+        MatrizDistancias[16][23] = 749;
+        MatrizDistancias[16][24] = 1219;
+        MatrizDistancias[16][25] = 349;
+        MatrizDistancias[16][26] = 929;
+        //************************************
+        MatrizDistancias[17][0] = 596;
+        MatrizDistancias[17][1] = 998;
+        MatrizDistancias[17][2] = 800; 
+        MatrizDistancias[17][3] = 1791;
+        MatrizDistancias[17][4] = 606;
+        MatrizDistancias[17][5] = 710;
+        MatrizDistancias[17][6] = 879;
+        MatrizDistancias[17][7] = 1449;
+        MatrizDistancias[17][8] = 1129;
+        MatrizDistancias[17][9] = 677;
+        MatrizDistancias[17][10] = 501;
+        MatrizDistancias[17][11] = 248;
+        MatrizDistancias[17][12] = 639;
+        MatrizDistancias[17][13] = 884;
+        MatrizDistancias[17][14] = 1110;
+        MatrizDistancias[17][15] = 552;
+        MatrizDistancias[17][16] = 859;
+        MatrizDistancias[17][17] = 0;
+        MatrizDistancias[17][18] = 1189;
+        MatrizDistancias[17][19] = 689;
+        MatrizDistancias[17][20] = 1091;
+        MatrizDistancias[17][21] = 800;
+        MatrizDistancias[17][22] = 1362;
+        MatrizDistancias[17][23] = 916;
+        MatrizDistancias[17][24] = 1005;
+        MatrizDistancias[17][25] = 1026;
+        MatrizDistancias[17][26] = 816;
+        //************************************
+        MatrizDistancias[18][0] = 1289;
+        MatrizDistancias[18][1] = 284;
+        MatrizDistancias[18][2] = 1147; 
+        MatrizDistancias[18][3] = 708;
+        MatrizDistancias[18][4] = 1459;
+        MatrizDistancias[18][5] = 1403;
+        MatrizDistancias[18][6] = 408;
+        MatrizDistancias[18][7] = 1024;
+        MatrizDistancias[18][8] = 1694;
+        MatrizDistancias[18][9] = 1370;
+        MatrizDistancias[18][10] = 1192;
+        MatrizDistancias[18][11] = 941;
+        MatrizDistancias[18][12] = 708;
+        MatrizDistancias[18][13] = 1577;
+        MatrizDistancias[18][14] = 1803;
+        MatrizDistancias[18][15] = 1245;
+        MatrizDistancias[18][16] = 1552;
+        MatrizDistancias[18][17] = 1189;
+        MatrizDistancias[18][18] = 0;
+        MatrizDistancias[18][19] = 557;
+        MatrizDistancias[18][20] = 191;
+        MatrizDistancias[18][21] = 1000;
+        MatrizDistancias[18][22] = 279;
+        MatrizDistancias[18][23] = 1263;
+        MatrizDistancias[18][24] = 1125;
+        MatrizDistancias[18][25] = 1647;
+        MatrizDistancias[18][26] = 1175;
+       //************************************
+        MatrizDistancias[19][0] = 789;
+        MatrizDistancias[19][1] = 309;
+        MatrizDistancias[19][2] = 993; 
+        MatrizDistancias[19][3] = 1102;
+        MatrizDistancias[19][4] = 966;
+        MatrizDistancias[19][5] = 893;
+        MatrizDistancias[19][6] = 185;
+        MatrizDistancias[19][7] = 1235;
+        MatrizDistancias[19][8] = 1322;
+        MatrizDistancias[19][9] = 870;
+        MatrizDistancias[19][10] = 694;
+        MatrizDistancias[19][11] = 441;
+        MatrizDistancias[19][12] = 115;
+        MatrizDistancias[19][13] = 1077;
+        MatrizDistancias[19][14] = 1303;
+        MatrizDistancias[19][15] = 745;
+        MatrizDistancias[19][16] = 1052;
+        MatrizDistancias[19][17] = 689;
+        MatrizDistancias[19][18] = 557;
+        MatrizDistancias[19][19] = 0;
+        MatrizDistancias[19][20] = 402;
+        MatrizDistancias[19][21] = 1140;
+        MatrizDistancias[19][22] = 673;
+        MatrizDistancias[19][23] = 1109;
+        MatrizDistancias[19][24] = 1025;
+        MatrizDistancias[19][25] = 1383;
+        MatrizDistancias[19][26] = 1075;
+       //************************************
+        MatrizDistancias[20][0] = 1191;
+        MatrizDistancias[20][1] = 93;
+        MatrizDistancias[20][2] = 1139; 
+        MatrizDistancias[20][3] = 700;
+        MatrizDistancias[20][4] = 1266;
+        MatrizDistancias[20][5] = 1305;
+        MatrizDistancias[20][6] = 217;
+        MatrizDistancias[20][7] = 833;
+        MatrizDistancias[20][8] = 1724;
+        MatrizDistancias[20][9] = 1272;
+        MatrizDistancias[20][10] = 1096;
+        MatrizDistancias[20][11] = 843;
+        MatrizDistancias[20][12] = 517;
+        MatrizDistancias[20][13] = 1479;
+        MatrizDistancias[20][14] = 1705;
+        MatrizDistancias[20][15] = 1147;
+        MatrizDistancias[20][16] = 1454;
+        MatrizDistancias[20][17] = 1091;
+        MatrizDistancias[20][18] = 191;
+        MatrizDistancias[20][19] = 402;
+        MatrizDistancias[20][20] = 0;
+        MatrizDistancias[20][21] = 992;
+        MatrizDistancias[20][22] = 271;
+        MatrizDistancias[20][23] = 1255;
+        MatrizDistancias[20][24] = 965;
+        MatrizDistancias[20][25] = 1487;
+        MatrizDistancias[20][26] = 1015;
+       //************************************
+        MatrizDistancias[21][0] = 433;
+        MatrizDistancias[21][1] = 777;
+        MatrizDistancias[21][2] = 147; 
+        MatrizDistancias[21][3] = 292;
+        MatrizDistancias[21][4] = 660;
+        MatrizDistancias[21][5] = 631;
+        MatrizDistancias[21][6] = 1554;
+        MatrizDistancias[21][7] = 502;
+        MatrizDistancias[21][8] = 694;
+        MatrizDistancias[21][9] = 352;
+        MatrizDistancias[21][10] = 446;
+        MatrizDistancias[21][11] = 699;
+        MatrizDistancias[21][12] = 1090;
+        MatrizDistancias[21][13] = 449;
+        MatrizDistancias[21][14] = 1031;
+        MatrizDistancias[21][15] = 447;
+        MatrizDistancias[21][16] = 1080;
+        MatrizDistancias[21][17] = 800;
+        MatrizDistancias[21][18] = 1000;
+        MatrizDistancias[21][19] = 1140;
+        MatrizDistancias[21][20] = 992;
+        MatrizDistancias[21][21] = 0;
+        MatrizDistancias[21][22] = 721;
+        MatrizDistancias[21][23] = 263;
+        MatrizDistancias[21][24] = 479;
+        MatrizDistancias[21][25] = 766;
+        MatrizDistancias[21][26] = 219;
+       //************************************
+        MatrizDistancias[22][0] = 1154;
+        MatrizDistancias[22][1] = 364;
+        MatrizDistancias[22][2] = 868; 
+        MatrizDistancias[22][3] = 429;
+        MatrizDistancias[22][4] = 1048;
+        MatrizDistancias[22][5] = 1352;
+        MatrizDistancias[22][6] = 488;
+        MatrizDistancias[22][7] = 562;
+        MatrizDistancias[22][8] = 1415;
+        MatrizDistancias[22][9] = 1073;
+        MatrizDistancias[22][10] = 1167;
+        MatrizDistancias[22][11] = 1114;
+        MatrizDistancias[22][12] = 788;
+        MatrizDistancias[22][13] = 1170;
+        MatrizDistancias[22][14] = 1752;
+        MatrizDistancias[22][15] = 1198;
+        MatrizDistancias[22][16] = 1501;
+        MatrizDistancias[22][17] = 1362;
+        MatrizDistancias[22][18] = 279;
+        MatrizDistancias[22][19] = 673;
+        MatrizDistancias[22][20] = 271;
+        MatrizDistancias[22][21] = 721;
+        MatrizDistancias[22][22] = 0;
+        MatrizDistancias[22][23] = 984;
+        MatrizDistancias[22][24] = 871;
+        MatrizDistancias[22][25] = 1392;
+        MatrizDistancias[22][26] = 921;
+       //***********************************
+        MatrizDistancias[23][0] = 599;
+        MatrizDistancias[23][1] = 1418;
+        MatrizDistancias[23][2] = 116; 
+        MatrizDistancias[23][3] = 555;
+        MatrizDistancias[23][4] = 632;
+        MatrizDistancias[23][5] = 600;
+        MatrizDistancias[23][6] = 1294;
+        MatrizDistancias[23][7] = 765;
+        MatrizDistancias[23][8] = 663;
+        MatrizDistancias[23][9] = 321;
+        MatrizDistancias[23][10] = 415;
+        MatrizDistancias[23][11] = 668;
+        MatrizDistancias[23][12] = 1059;
+        MatrizDistancias[23][13] = 418;
+        MatrizDistancias[23][14] = 1000;
+        MatrizDistancias[23][15] = 446;
+        MatrizDistancias[23][16] = 749;
+        MatrizDistancias[23][17] = 916;
+        MatrizDistancias[23][18] = 1263;
+        MatrizDistancias[23][19] = 1109;
+        MatrizDistancias[23][20] = 1215;
+        MatrizDistancias[23][21] = 263;
+        MatrizDistancias[23][22] = 984;
+        MatrizDistancias[23][23] = 0;
+        MatrizDistancias[23][24] = 683;
+        MatrizDistancias[23][25] = 715;
+        MatrizDistancias[23][26] = 262;
+       //***********************************
+        MatrizDistancias[24][0] = 907;
+        MatrizDistancias[24][1] = 1003;
+        MatrizDistancias[24][2] = 632; 
+        MatrizDistancias[24][3] = 417;
+        MatrizDistancias[24][4] = 1135;
+        MatrizDistancias[24][5] = 1092;
+        MatrizDistancias[24][6] = 1082;
+        MatrizDistancias[24][7] = 346;
+        MatrizDistancias[24][8] = 800;
+        MatrizDistancias[24][9] = 824;
+        MatrizDistancias[24][10] = 899;
+        MatrizDistancias[24][11] = 818;
+        MatrizDistancias[24][12] = 1141;
+        MatrizDistancias[24][13] = 916;
+        MatrizDistancias[24][14] = 1347;
+        MatrizDistancias[24][15] = 943;
+        MatrizDistancias[24][16] = 1219;
+        MatrizDistancias[24][17] = 1005;
+        MatrizDistancias[24][18] = 1125;
+        MatrizDistancias[24][19] = 1025;
+        MatrizDistancias[24][20] = 965;
+        MatrizDistancias[24][21] = 479;
+        MatrizDistancias[24][22] = 871;
+        MatrizDistancias[24][23] = 683;
+        MatrizDistancias[24][24] = 0;
+        MatrizDistancias[24][25] = 1243;
+        MatrizDistancias[24][26] = 422;
+       //***********************************
+        MatrizDistancias[25][0] = 636;
+        MatrizDistancias[25][1] = 1524;
+        MatrizDistancias[25][2] = 618; 
+        MatrizDistancias[25][3] = 1043;
+        MatrizDistancias[25][4] = 632;
+        MatrizDistancias[25][5] = 487;
+        MatrizDistancias[25][6] = 1595;
+        MatrizDistancias[25][7] = 1170;
+        MatrizDistancias[25][8] = 136;
+        MatrizDistancias[25][9] = 552;
+        MatrizDistancias[25][10] = 722;
+        MatrizDistancias[25][11] = 884;
+        MatrizDistancias[25][12] = 1319;
+        MatrizDistancias[25][13] = 327;
+        MatrizDistancias[25][14] = 103;
+        MatrizDistancias[25][15] = 671;
+        MatrizDistancias[25][16] = 349;
+        MatrizDistancias[25][17] = 1026;
+        MatrizDistancias[25][18] = 1647;
+        MatrizDistancias[25][19] = 1383;
+        MatrizDistancias[25][20] = 1487;
+        MatrizDistancias[25][21] = 766;
+        MatrizDistancias[25][22] = 1392;
+        MatrizDistancias[25][23] = 715;
+        MatrizDistancias[25][24] = 1243;
+        MatrizDistancias[25][25] = 0;
+        MatrizDistancias[25][26] = 954;
+       //***********************************
+        MatrizDistancias[26][0] = 422;
+        MatrizDistancias[26][1] = 1053;
+        MatrizDistancias[26][2] = 342; 
+        MatrizDistancias[26][3] = 479;
+        MatrizDistancias[26][4] = 846;
+        MatrizDistancias[26][5] = 802;
+        MatrizDistancias[26][6] = 1128;
+        MatrizDistancias[26][7] = 483;
+        MatrizDistancias[26][8] = 534;
+        MatrizDistancias[26][9] = 534;
+        MatrizDistancias[26][10] = 609;
+        MatrizDistancias[26][11] = 629;
+        MatrizDistancias[26][12] = 940;
+        MatrizDistancias[26][13] = 627;
+        MatrizDistancias[26][14] = 1057;
+        MatrizDistancias[26][15] = 653;
+        MatrizDistancias[26][16] = 929;
+        MatrizDistancias[26][17] = 816;
+        MatrizDistancias[26][18] = 1175;
+        MatrizDistancias[26][19] = 1075;
+        MatrizDistancias[26][20] = 1015;
+        MatrizDistancias[26][21] = 219;
+        MatrizDistancias[26][22] = 921;
+        MatrizDistancias[26][23] = 262;
+        MatrizDistancias[26][24] = 422;
+        MatrizDistancias[26][25] = 954;
+        MatrizDistancias[26][26] = 0;
+        
+        return MatrizDistancias;
+    }
+    
+    public static String [] Transportadoras(){
+       String Transportadoras [] = new String[3];
+       Transportadoras[0] = "1. Servientrega";
+       Transportadoras[1] = "2. TCC";
+       Transportadoras[2] = "3. DHL";
+       return Transportadoras;
+    }   
+    
+    public static void RegistrarTarifas (double Tarifa[], String Transportadoras []){
+        Scanner teclado = new Scanner(System.in);
+        for (int i = 0; i < Tarifa.length; i++) {
+            System.out.print("Tarifa[ "+ (Transportadoras[i]) +" ]= " ); Tarifa[i]=teclado.nextDouble(); 
+        }
+        System.out.println("");
+    }   
+    
+    public static void mostrarVector(String[] vector){
+        for (int i = 0; i < vector.length; i++) {
+            if (i == 10 || i == 20){
+                System.out.println("");
+            }
+            System.out.print(vector[i] + ", ");                    
+        }
+        System.out.println("");
+        System.out.println("");
+    }
+    
+    public static void mostrarVectorTarifas(double[] vector, String Transportadoras []){
+        System.out.println("********** TRANSPORTADORAS **********");
+        for (int i = 0; i < vector.length; i++) {
+            System.out.println((Transportadoras[i])+" = "+vector[i]);                    
+        }
+        System.out.println("");
+    }
+   
+    public static int PedirCiudadOrigen (){
+        Scanner teclado = new Scanner(System.in);
+        System.out.println("Digite el numero de la ciudad Origen: "); int CiudadOrigen = teclado.nextInt();
+        return CiudadOrigen; 
+    }
+    
+    public static int PedirCiudadDestino (){
+        Scanner teclado = new Scanner(System.in);
+        System.out.println("Digite el numero de la ciudad Destino: "); int CiudadDestino = teclado.nextInt();
+        return CiudadDestino;
+    }
+    
+    public static double PedirPesoMercancia (){
+        Scanner teclado = new Scanner(System.in);
+        System.out.println("Digite el peso de la mercancia: "); double Peso = teclado.nextDouble();
+        return Peso;
+    }
+    
+    public static int PedirTransportadora (){
+        Scanner teclado = new Scanner(System.in);
+        int Transportadora = 0;
+        do{
+            System.out.println("Digite el numero de la transportadora: "); Transportadora = teclado.nextInt();
+        }while( Transportadora >= 4 );
+        return Transportadora;
+    }
+    
+    public static int PedirTarifa(){
+        Scanner teclado = new Scanner(System.in);
+        System.out.println("Digite la tarifa de la transportadora: "); int Tarifa = teclado.nextInt();
+        return Tarifa;
+    }
+    
+    public static double CostoEnvio (int CiudadOrigen, int CiudadDestino, int matriz[][], double Tarifa){
+        double Costo = (double) (matriz[CiudadOrigen-1][CiudadDestino-1] * PedirPesoMercancia() * Tarifa);
+        return Costo;
+    }
+    
+    public static void MostrarCosto (double costo){
+        System.out.println("El costo total del envio es = $ " + costo);
+    }
+    
+    public static void MostrarCostoTodasCiudades (int CiudadOrigen, int matriz[][], double Tarifa){
+        double Peso = PedirPesoMercancia();
+        String vector[] = Ciudades();
+        for (int i = 0; i < matriz.length; i++) {
+            if (i == CiudadOrigen-1){
+                System.out.print("");
+            }
+            else{
+                double Costos = (double) ( matriz[CiudadOrigen-1][i] * Tarifa * Peso);
+                System.out.println("Costo del envio de " + vector[CiudadOrigen-1] + " a " + vector[i] + " es = $ " + Costos); 
+            }   
+        }           
+    }
+    
+    public static void DistanciaDosCiudades (int Origen, int Destino, int matriz[][]){
+        int mat[][] = Distancias();
+        String vector [] = Ciudades();
+        int Distancia = mat[Origen-1][Destino-1];
+        if (Origen == Destino){
+            System.out.println("ERROR. Es la misma ciudad");
+        }
+        else{
+            System.out.println("Hay " + Distancia + " Km entre " + vector[Origen-1] + " y " + vector[Destino-1]);
+            System.out.println("");
+        }
+        
+    }
+    
+    public static void DistanciaMenor (int matriz[][]){
+        int Menor = 100, fil = 0, col = 0;
+        for (int f = 0; f < matriz.length; f++) {
+            for (int c = 0; c < matriz[f].length; c++) {
+                if (matriz[f][c] < Menor && matriz[f][c] > 0){
+                    Menor = matriz[f][c];
+                    fil = f;
+                    col = c;
+                }
+            }
+        }
+        CiudadesCercanas(fil, col, Menor);
+    }
+    
+    public static void CiudadesCercanas (int menorFila, int menorColumna, int Km){
+        String vector[] = Ciudades();
+        System.out.println("Las ciudades mas cercanas son: " + vector[menorFila] + " y " + vector[menorColumna]+ " con " + Km + " Kilometros de distancia.");
+    } 
+ 
+    public static void DistanciaMayor (int matriz[][]){
+        int Mayor = 0, fil = 0, col = 0;
+        for (int f = 0; f < matriz.length; f++) {
+            for (int c = 0; c < matriz[f].length; c++) {
+                if (matriz[f][c] > Mayor){
+                    Mayor = matriz[f][c];
+                    fil = f;
+                    col = c;
+                }
+            }
+        }
+        CiudadesLejanas(fil, col, Mayor);
+    }
+    
+    public static void CiudadesLejanas (int mayorFila, int mayorColumna, int Km){
+        String vector[] = Ciudades();
+        System.out.println("Las ciudades mas lejanas son: " + vector[mayorFila] + " y " + vector[mayorColumna] + " con " + Km + " Kilometros de distancia.");
+        System.out.println("");
+    } 
+    
+    public static void main(String[] args) {
+        MenuPrincipal();
+    }
+}
